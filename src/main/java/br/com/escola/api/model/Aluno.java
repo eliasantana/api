@@ -1,5 +1,6 @@
 package br.com.escola.api.model;
 
+import br.com.escola.api.dto.AlunoDto;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -11,15 +12,16 @@ public class Aluno {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cdAluno;
     private String nome;
-    private int cpf;
+    private Long cpf;
     private LocalDate dtCadastro;
     private String snAtivo;
 
-    Aluno(){
+    public Aluno(){
 
     }
 
-    public Aluno(String nome, int cpf, LocalDate dtCadastro, String snAtivo) {
+    public Aluno(Long cdAluno, String nome, Long cpf, LocalDate dtCadastro, LocalDate now, String snAtivo) {
+        this.cdAluno = cdAluno;
         this.nome = nome;
         this.cpf = cpf;
         this.dtCadastro = dtCadastro;
@@ -42,11 +44,11 @@ public class Aluno {
         this.nome = nome;
     }
 
-    public int getCpf() {
+    public Long getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(Long cpf) {
         this.cpf = cpf;
     }
 
@@ -66,5 +68,25 @@ public class Aluno {
         this.snAtivo = snAtivo;
     }
 
+    public AlunoDto convertToDto( ){
+        AlunoDto alunoDto= new AlunoDto();
+        alunoDto.setNome(getNome());
+        alunoDto.setCdAluno(getCdAluno());
+        alunoDto.setCpf(getCpf());
+        alunoDto.setSnAtivo(getSnAtivo());
+        alunoDto.setDtCadastro(getDtCadastro());
 
+        return alunoDto;
+    }
+
+    @Override
+    public String toString() {
+        return "Aluno{" +
+                "cdAluno=" + cdAluno +
+                ", nome='" + nome + '\'' +
+                ", cpf=" + cpf +
+                ", dtCadastro=" + dtCadastro +
+                ", snAtivo='" + snAtivo + '\'' +
+                '}';
+    }
 }
