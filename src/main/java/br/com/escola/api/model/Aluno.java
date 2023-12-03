@@ -1,6 +1,5 @@
 package br.com.escola.api.model;
 
-import br.com.escola.api.dto.AlunoDto;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -8,6 +7,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "Aluno")
 public class Aluno {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cdAluno;
@@ -20,7 +20,7 @@ public class Aluno {
 
     }
 
-    public Aluno(Long cdAluno, String nome, Long cpf, LocalDate dtCadastro, LocalDate now, String snAtivo) {
+    public Aluno(Long cdAluno, String nome, Long cpf, LocalDate dtCadastro,  String snAtivo) {
         this.cdAluno = cdAluno;
         this.nome = nome;
         this.cpf = cpf;
@@ -66,17 +66,6 @@ public class Aluno {
 
     public void setSnAtivo(String snAtivo) {
         this.snAtivo = snAtivo;
-    }
-
-    public AlunoDto convertToDto( ){
-        AlunoDto alunoDto= new AlunoDto();
-        alunoDto.setNome(getNome());
-        alunoDto.setCdAluno(getCdAluno());
-        alunoDto.setCpf(getCpf());
-        alunoDto.setSnAtivo(getSnAtivo());
-        alunoDto.setDtCadastro(getDtCadastro());
-
-        return alunoDto;
     }
 
     @Override
