@@ -6,6 +6,7 @@ import br.com.escola.api.dto.ProfessorDto;
 import br.com.escola.api.model.Professor;
 import br.com.escola.api.repository.AlunoRepository;
 import br.com.escola.api.repository.ProfessorRepository;
+import br.com.escola.api.services.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,8 @@ public class ProfessorServices {
     }
 
     public ResponseEntity<ProfessorDto> localizar(Long id) {
-       Professor professor =  repository.localizar(id);
-       return ResponseEntity.ok(new ProfessorDto(professor));
+      // Professor professor =  repository.localizar(id);
+      return ResponseEntity.ok(new ProfessorDto(repository.findById(id).orElseThrow(()-> new NotFoundException("Professor nâo localizado! " + id))));
     }
 
     public ResponseEntity<ProfessorDto> delete(Long id) {
