@@ -4,6 +4,8 @@ import br.com.escola.api.dto.AlunoDto;
 import br.com.escola.api.model.Aluno;
 import br.com.escola.api.repository.AlunoRepository;
 
+import br.com.escola.api.services.exceptions.MethodArgumentNotValidException;
+import br.com.escola.api.services.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
@@ -31,38 +33,48 @@ public class AlunosServices {
     }
 
     public AlunoDto localizar(Long id) {
-       return new AlunoDto(repository.localizarAluno(id));
+       Aluno aluno =  repository.localizarAluno(id);
+       if (aluno==null){
+          throw new NotFoundException("Aluno não localizado : ID "+id);
+       }
+       return new AlunoDto();
     }
 
     public ResponseEntity<AlunoDto> delete(Long id) {
-        if (repository.findById(id).isPresent()){
+        Optional<Aluno> aluno = repository.findById(id);
+        if (aluno.isPresent()){
             repository.deleteById(id);
+        }else{
+            throw new NotFoundException("Aluno ID % não localizado!");
         }
         return ResponseEntity.noContent().build();
     }
 
-    public AlunoDto update(AlunoDto alunoDto, Long id) {
-        Optional<Aluno> alunoLocalizado = repository.findById(id);
+    public AlunoDto update(AlunoDto alunoDto, Long id){
+
         Aluno alunoAlteracao = null;
-        if (alunoLocalizado.isPresent()) {
-            alunoAlteracao = new Aluno();
-            alunoAlteracao.setCdAluno(id);
-            alunoAlteracao.setNome(alunoDto.getNome());
-            alunoAlteracao.setCpf(Long.parseLong(alunoDto.getCpf()));
-            if (alunoDto.getDtCadastro()!=null){
-                alunoAlteracao.setDtCadastro(LocalDate.parse(alunoDto.getDtCadastro()));
-            }else{
-                alunoAlteracao.setDtCadastro(alunoLocalizado.get().getDtCadastro());
-            }
-            if(alunoDto.getSnAtivo()!=null){
-                alunoAlteracao.setSnAtivo(alunoDto.getSnAtivo());
-            }else{
-                alunoAlteracao.setSnAtivo(alunoLocalizado.get().getSnAtivo());
-            }
+        Optional<Aluno> alunoLocalizado = repository.findById(id);
 
-            repository.save(alunoAlteracao);
-        }
+            if (alunoLocalizado.isPresent()) {
+                alunoAlteracao = new Aluno();
+                alunoAlteracao.setCdAluno(id);
+                alunoAlteracao.setNome(alunoDto.getNome());
+                alunoAlteracao.setCpf(Long.parseLong(alunoDto.getCpf()));
+                if (alunoDto.getDtCadastro()!=null){
+                    alunoAlteracao.setDtCadastro(LocalDate.parse(alunoDto.getDtCadastro()));
+                }else{
+                    alunoAlteracao.setDtCadastro(alunoLocalizado.get().getDtCadastro());
+                }
+                if(alunoDto.getSnAtivo()!=null){
+                    alunoAlteracao.setSnAtivo(alunoDto.getSnAtivo());
+                }else{
+                    alunoAlteracao.setSnAtivo(alunoLocalizado.get().getSnAtivo());
+                }
 
+                repository.save(alunoAlteracao);
+            }else{
+                throw new NotFoundException(String.format("O aluno ID %s nâo foi localizado ",id));
+            }
         return new AlunoDto(alunoAlteracao);
     }
 
