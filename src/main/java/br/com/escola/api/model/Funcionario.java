@@ -2,28 +2,36 @@ package br.com.escola.api.model;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import br.com.escola.api.dto.FuncionarioDto;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Funcionario")
 public class Funcionario {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long cdFuncionario;
 	private String nome;
 	private LocalDateTime dtCadastro;
-	private int cpf;
+	private String cpf;
 	
-	public Funcionario () {
+	public Funcionario() {	
+	}
+	
+	public Funcionario(FuncionarioDto funcionarioDto) {
+		this.cdFuncionario = funcionarioDto.getCdFuncionario();
+		this.nome = funcionarioDto.getNome();
+		if(funcionarioDto.getDtCadastro() != null) {
+			this.dtCadastro = funcionarioDto.getDtCadastro();
+		} else {
+			this.dtCadastro = LocalDateTime.now();
+		}
 		
+		this.cpf = funcionarioDto.getCpf();
 	}
 
-	public Funcionario(Long cdFuncionario, String nome, LocalDateTime dtCadastro, int cpf) {
+	public Funcionario(Long cdFuncionario, String nome, LocalDateTime dtCadastro, String cpf) {
 		this.cdFuncionario = cdFuncionario;
 		this.nome = nome;
 		this.dtCadastro = dtCadastro;
@@ -54,11 +62,11 @@ public class Funcionario {
 		this.dtCadastro = dtCadastro;
 	}
 
-	public int getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(int cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 	
