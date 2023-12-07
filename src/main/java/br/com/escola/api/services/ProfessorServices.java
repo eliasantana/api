@@ -3,6 +3,7 @@ package br.com.escola.api.services;
 
 import br.com.escola.api.dto.AlunoDto;
 import br.com.escola.api.dto.ProfessorDto;
+import br.com.escola.api.model.Aluno;
 import br.com.escola.api.model.Professor;
 import br.com.escola.api.repository.AlunoRepository;
 import br.com.escola.api.repository.ProfessorRepository;
@@ -32,12 +33,16 @@ public class ProfessorServices {
     }
 
     public ResponseEntity<ProfessorDto> localizar(Long id) {
-      // Professor professor =  repository.localizar(id);
-      return ResponseEntity.ok(new ProfessorDto(repository.findById(id).orElseThrow(()-> new NotFoundException("Professor nâo localizado! " + id))));
+        return ResponseEntity.ok(new ProfessorDto(repository.findById(id).orElseThrow(()-> new NotFoundException("Professor nâo localizado! " + id))));
     }
 
     public ResponseEntity<ProfessorDto> delete(Long id) {
-        repository.deleteById(id);
+        Optional<Professor> profesor = repository.findById(id);
+        if (profesor.isPresent()){
+            repository.deleteById(id);
+        }else{
+            throw new NotFoundException(String.format("O professor %s não foi localizado!",id));
+        }
         return ResponseEntity.noContent().build();
     }
 
@@ -51,10 +56,15 @@ public class ProfessorServices {
 
     public ResponseEntity<ProfessorDto> alterar(ProfessorDto dto, Long id) {
         Professor professor = repository.localizar(id);
-        Professor novoProfessor = new Professor();
-        novoProfessor.setCdProfessor(professor.getCdProfessor());
-        novoProfessor.setNome(dto.getNome());
-        ProfessorDto profDto = new ProfessorDto(repository.save(novoProfessor));
+        ProfessorDto profDto = new ProfessorDto();
+        if (professor!=null){
+            Professor novoProfessor = new Professor();
+            novoProfessor.setCdProfessor(professor.getCdProfessor());
+            novoProfessor.setNome(dto.getNome());
+            profDto = new ProfessorDto(repository.save(novoProfessor));
+        }else{
+            throw new NotFoundException(String.format("Professor ID %s não localizado!"));
+        }
         return  ResponseEntity.ok(profDto);
     }
 }
