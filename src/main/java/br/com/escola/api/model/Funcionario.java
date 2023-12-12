@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 public class Funcionario {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long cdFuncionario;
 	private String nome;
 	private LocalDateTime dtCadastro;
