@@ -6,9 +6,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import br.com.escola.api.dto.FuncionarioDto;
 import br.com.escola.api.model.Funcionario;
 import br.com.escola.api.repository.FuncionarioRepository;
+import br.com.escola.api.services.exceptions.NotFoundException;
 
 @Service
 public class FuncionarioServices {
@@ -20,8 +22,11 @@ public class FuncionarioServices {
 	public FuncionarioDto createFuncionario(FuncionarioDto funcionarioDto) {
 		Funcionario funcionario = new Funcionario(funcionarioDto);
 		Funcionario funcionarioSalvo = this.funcionarioRepository.save(funcionario);
-		
-		return new FuncionarioDto(funcionarioSalvo);
+		if (funcionarioSalvo != null) {
+			return new FuncionarioDto(funcionarioSalvo);
+		} else {
+			throw new NotFoundException("Erro ao tentar salvar funcionario!");
+		}
 	}
 	
 	//Busca todos os Funcionários
@@ -34,18 +39,20 @@ public class FuncionarioServices {
 	}
 	
 	//Buscar Funcionário por Id
-	public FuncionarioDto funcionarioPorId(Long idFuncionario) throws Exception {
-		Funcionario funcionario = this.funcionarioRepository.findById(idFuncionario).orElseThrow(() -> new Exception("Funcionário não encontrado!") );
+	public FuncionarioDto funcionarioPorId(Long idFuncionario) {
+		Funcionario funcionario = this.funcionarioRepository.findById(idFuncionario).orElseThrow(() -> new NotFoundException("Funcionário não encontrado!") );
 		FuncionarioDto funcionarioDto = new FuncionarioDto(funcionario);
 		return funcionarioDto;
 	}
 	
 	//Atualiza Funcionario
-	public FuncionarioDto atualizaFuncionario(FuncionarioDto funcionarioDto, Long id) throws Exception {
-		FuncionarioDto funcionarioDtoLocalizado = this.funcionarioPorId(id);
+	public FuncionarioDto atualizaFuncionario(FuncionarioDto funcionarioDto, Long id) {
+		//Optional<FuncionarioDto> funcionarioDtoLocalizado = this.funcionarioPorId(id);
+		
+		Optional<Funcionario> funcionarioLocalizado = this.funcionarioRepository.findById(id);
 		
 		//Se existe o funcionario cadastrado, então atualiza.
-		if (funcionarioDtoLocalizado != null) {
+		if (funcionarioLocalizado.isPresent()) {
 			Funcionario funcionario = new Funcionario();
 			funcionario.setCdFuncionario(id);
 			funcionario.setNome(funcionarioDto.getNome());
@@ -55,18 +62,18 @@ public class FuncionarioServices {
 			this.funcionarioRepository.save(funcionario);
 			return new FuncionarioDto(funcionario);
 		} else {
-			throw new Exception("Funcionario não encontrado!");
+			throw new NotFoundException("Funcionario não encontrado!");
 		}
 	}
 	
 	
 	//Deleta Funcionario
-	public List<FuncionarioDto> deletaFuncionario(Long id) throws Exception {
-		FuncionarioDto funcionarioDto = this.funcionarioPorId(id);
-		if (funcionarioDto != null) {
+	public List<FuncionarioDto> deletaFuncionario(Long id) {
+		Optional<Funcionario> funcionario = this.funcionarioRepository.findById(id);
+		if (funcionario.isPresent()) {
 			this.funcionarioRepository.deleteById(id);
 		} else {
-			throw new Exception("Funcionario não encontrado!");
+			throw new NotFoundException("Funcionario não encontrado!");
 		}
 		return this.listarTodosFuncionarios();
 		

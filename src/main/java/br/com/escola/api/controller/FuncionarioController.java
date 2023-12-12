@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.escola.api.dto.FuncionarioDto;
 import br.com.escola.api.services.FuncionarioServices;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/funcionario")
@@ -25,7 +26,7 @@ public class FuncionarioController {
 	FuncionarioServices funcionarioServices;
 
 	@PostMapping()
-	public ResponseEntity<FuncionarioDto> creteFuncionario(@RequestBody FuncionarioDto funcionarioDto) {
+	public ResponseEntity<FuncionarioDto> creteFuncionario(@RequestBody @Valid FuncionarioDto funcionarioDto) {
 		FuncionarioDto funcionarioDtoSalvo = this.funcionarioServices.createFuncionario(funcionarioDto);
 		return new ResponseEntity<>(funcionarioDtoSalvo, HttpStatus.CREATED);
 	}
@@ -37,19 +38,19 @@ public class FuncionarioController {
 	}
 	
 	@GetMapping("/listar/{id}")
-	public ResponseEntity<FuncionarioDto> funcionarioPorId(@PathVariable("id")  Long id) throws Exception {
+	public ResponseEntity<FuncionarioDto> funcionarioPorId(@PathVariable("id") @Valid Long id) {
 		FuncionarioDto funcionarioDto = this.funcionarioServices.funcionarioPorId(id);
 		return new ResponseEntity<>(funcionarioDto, HttpStatus.OK);
 	}
 	
 	@PutMapping("/atualizar/{id}")
-	public ResponseEntity<FuncionarioDto> atualisaFuncionario(@RequestBody FuncionarioDto funcionarioDto, @PathVariable Long id) throws Exception {
+	public ResponseEntity<FuncionarioDto> atualisaFuncionario(@RequestBody FuncionarioDto funcionarioDto, @PathVariable  @Valid Long id) {
 		FuncionarioDto funcionarioDtoAtualizado = this.funcionarioServices.atualizaFuncionario(funcionarioDto, id);
 		return new ResponseEntity<>(funcionarioDtoAtualizado, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/deletar/{id}")
-	public ResponseEntity<List<FuncionarioDto>> deleteFuncionario(@PathVariable("id") Long id) throws Exception {
+	public ResponseEntity<List<FuncionarioDto>> deleteFuncionario(@PathVariable("id") @Valid Long id) {
 		List<FuncionarioDto> funcionarioDto = this.funcionarioServices.deletaFuncionario(id);
 		return new ResponseEntity<>(funcionarioDto, HttpStatus.OK);
 	}
