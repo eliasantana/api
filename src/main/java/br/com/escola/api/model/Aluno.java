@@ -1,8 +1,11 @@
 package br.com.escola.api.model;
 
 import jakarta.persistence.*;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Aluno")
@@ -15,6 +18,8 @@ public class Aluno {
     private Long cpf;
     private LocalDate dtCadastro;
     private String snAtivo;
+    @OneToMany(mappedBy = "aluno")
+    private List<Matricula> matricula = new ArrayList<>();
 
     public Aluno(){
 
@@ -68,6 +73,14 @@ public class Aluno {
         this.snAtivo = snAtivo;
     }
 
+    public void setMatricula(List<Matricula> matricula) {
+        this.matricula = matricula;
+    }
+
+    public List<Matricula> getMatricula() {
+        return matricula;
+    }
+
     @Override
     public String toString() {
         return "Aluno{" +
@@ -76,6 +89,7 @@ public class Aluno {
                 ", cpf=" + cpf +
                 ", dtCadastro=" + dtCadastro +
                 ", snAtivo='" + snAtivo + '\'' +
+                ", matricula=" + matricula +
                 '}';
     }
 }

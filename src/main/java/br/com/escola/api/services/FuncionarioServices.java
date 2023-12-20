@@ -22,7 +22,7 @@ public class FuncionarioServices {
 	public FuncionarioDto createFuncionario(FuncionarioDto funcionarioDto) {
 		Funcionario funcionario = new Funcionario(funcionarioDto);
 		Funcionario funcionarioSalvo = this.funcionarioRepository.save(funcionario);
-		if (funcionarioSalvo != null) {
+		if (null != funcionarioSalvo) {
 			return new FuncionarioDto(funcionarioSalvo);
 		} else {
 			throw new NotFoundException("Erro ao tentar salvar funcionario!");

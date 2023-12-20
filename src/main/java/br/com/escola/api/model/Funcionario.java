@@ -1,6 +1,8 @@
 package br.com.escola.api.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.escola.api.dto.FuncionarioDto;
 import jakarta.persistence.*;
@@ -15,6 +17,8 @@ public class Funcionario {
 	private String nome;
 	private LocalDateTime dtCadastro;
 	private String cpf;
+	@OneToMany(mappedBy = "funcionario")
+	List<Matricula> matricula = new ArrayList<>();
 	
 	public Funcionario() {	
 	}
