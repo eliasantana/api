@@ -25,7 +25,7 @@ public class FuncionarioController {
 	@Autowired
 	FuncionarioServices funcionarioServices;
 
-	@PostMapping()
+	@PostMapping("/adicionar")
 	public ResponseEntity<FuncionarioDto> creteFuncionario(@RequestBody @Valid FuncionarioDto funcionarioDto) {
 		FuncionarioDto funcionarioDtoSalvo = this.funcionarioServices.createFuncionario(funcionarioDto);
 		return new ResponseEntity<>(funcionarioDtoSalvo, HttpStatus.CREATED);

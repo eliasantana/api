@@ -5,6 +5,7 @@ import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.*;
 
 @ControllerAdvice
 public class ExceptionHandler {
@@ -36,6 +37,17 @@ public class ExceptionHandler {
     public ResponseEntity<StandardError>dataIntegrityViolationException(DataIntegrityViolationException ex, HttpServletRequest request){
         StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),"DataIntegrityViolation", ex.getMessage(), request.getRequestURI());
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+    @org.springframework.web.bind.annotation.ExceptionHandler(MatriculaExistenteException.class)
+    public ResponseEntity<StandardError>matriculaExistenteException(MatriculaExistenteException ex, HttpServletRequest request){
+        StandardError erros = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "MatriculaExistenteException", ex.getMessage(), request.getRequestURI());
+        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erros);
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<StandardError>illegalArgumentException(IllegalArgumentException ex, HttpServletRequest request){
+        StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "MatriculaForaDoPeriodoException", ex.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
 }
