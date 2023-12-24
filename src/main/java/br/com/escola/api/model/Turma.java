@@ -14,23 +14,29 @@ public class Turma {
 	public Turma() {
 	}
 	
-	public Turma(Long cdTurma, String dsTurma, String local) {
+	public Turma(Long cdTurma, String dsTurma, int capacidade, String local) {
 		this.cdTurma = cdTurma;
 		this.dsTurma = dsTurma;
+		this.capacidade = capacidade;
 		this.local = local;
 	}
 
 	public Turma(TurmaDto turmaDto) {
 		this.cdTurma = turmaDto.getCdTurma();
 		this.dsTurma = turmaDto.getDsTurma();
+		this.capacidade = turmaDto.getCapacidade();
 		this.local = turmaDto.getLocal();
+		
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long cdTurma;
 	private String dsTurma;
+	private int capacidade;
 	private String local;
+	
+	
 	public Long getCdTurma() {
 		return cdTurma;
 	}
@@ -46,6 +52,14 @@ public class Turma {
 	public void setDsTurma(String dsTurma) {
 		this.dsTurma = dsTurma;
 	}
+	
+	public int getcapacidade() {
+		return this.capacidade;
+	}
+	
+	public void setcapacidade(int capacidade) {
+		this.capacidade = capacidade;
+	}
 
 	public String getLocal() {
 		return local;
@@ -57,7 +71,7 @@ public class Turma {
 
 	@Override
 	public String toString() {
-		return "Turma [cdTurma=" + cdTurma + ", dsTurma=" + dsTurma + ", local=" + local + "]";
+		return "Turma [cdTurma=" + cdTurma + ", dsTurma=" + dsTurma + "Capacidade=" + capacidade +   ", local=" + local + "]";
 	}
 	
 }

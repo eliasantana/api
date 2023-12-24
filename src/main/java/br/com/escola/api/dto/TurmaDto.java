@@ -7,20 +7,23 @@ public class TurmaDto {
 	public TurmaDto() {
 	}
 	
-	public TurmaDto(Long cdTurma, String dsTurma, String local) {
+	public TurmaDto(Long cdTurma, String dsTurma, int capacidade, String local) {
 		this.cdTurma = cdTurma;
 		this.dsTurma = dsTurma;
+		this.capacidade = capacidade;
 		this.local = local;
 	}
 
 	public TurmaDto(Turma turma) {
 		this.cdTurma = turma.getCdTurma();
 		this.dsTurma = turma.getDsTurma();
+		this.capacidade = turma.getcapacidade();
 		this.local = turma.getLocal();
 	}
 	
 	private Long cdTurma; 
-	private String dsTurma; 
+	private String dsTurma;
+	private int capacidade;
 	private String local;
 	
 	public Long getCdTurma() {
@@ -29,6 +32,10 @@ public class TurmaDto {
 
 	public String getDsTurma() {
 		return dsTurma;
+	}
+	
+	public int getCapacidade() {
+		return capacidade;
 	}
 
 	public String getLocal() {
