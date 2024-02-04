@@ -46,17 +46,16 @@ public class TurmaController {
 		return new ResponseEntity<>(turmaCadastrada, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("deletar/{cdTurma}")
+	@DeleteMapping("/deletar/{cdTurma}")
 	public ResponseEntity<TurmaDto> deletaTurma(@PathVariable @Valid Long cdTurma) {
 		this.turmaService.deletaTurma(cdTurma);
 		
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PutMapping("atualizar/{cdTurma}")
+	@PutMapping("/atualizar/{cdTurma}")
 	public ResponseEntity<TurmaDto> atualizarTurma(@RequestBody @Valid TurmaDto turmaDto, @PathVariable Long cdTurma) {
 		TurmaDto turmaAtualizada = this.turmaService.atualizarTurma(turmaDto, cdTurma);
-		
-		return new ResponseEntity<>(turmaAtualizada, HttpStatus.OK);
+				return new ResponseEntity<>(turmaAtualizada, HttpStatus.OK);
 	}
 }
