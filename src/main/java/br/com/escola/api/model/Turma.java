@@ -23,9 +23,9 @@ public class Turma {
 
 	public Turma(TurmaDto turmaDto) {
 		this.cdTurma = turmaDto.getCdTurma();
-		this.dsTurma = turmaDto.getDsTurma();
+		this.dsTurma = turmaDto.getDsTurma().replaceAll(" ","");
 		this.capacidade = turmaDto.getCapacidade();
-		this.local = turmaDto.getLocal();
+		this.local = turmaDto.getLocal().replaceAll(" ","");;
 		
 	}
 

@@ -42,9 +42,14 @@ public class TurmaServices {
 	
 	public TurmaDto cadastrarTurma(TurmaDto turmaDto) {
 		Turma turma = new Turma(turmaDto);
-		Turma turmaCadastrada = this.turmaRepository.save(turma);
-		
-		return new TurmaDto(turmaCadastrada);
+		Turma turmaLocalizada = turmaRepository.exists(turma.getDsTurma(), turma.getLocal());
+		if (turmaLocalizada == null){
+			turma.setDsTurma(turma.getDsTurma().replaceAll(" ",""));
+			turma.setLocal(turma.getLocal().replaceAll(" ", ""));
+			return new TurmaDto(this.turmaRepository.save(turma));
+		}else{
+			throw new NotFoundException("A turma informada já existe no local informado! -> Turma: " + turmaDto.getDsTurma() + " Local: "+turmaDto.getLocal());
+		}
 	}
 	
 	public void deletaTurma(Long cdTurma) {
