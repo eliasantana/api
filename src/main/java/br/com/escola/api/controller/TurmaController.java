@@ -29,7 +29,6 @@ public class TurmaController {
 	@GetMapping("/listar")
 	public ResponseEntity<List<TurmaDto>> listaDeTurmas() {
 		List<TurmaDto>  listaDto = this.turmaService.listaDeTurmas();
-		
 		return new ResponseEntity<> (listaDto, HttpStatus.OK);
 	}
 	
