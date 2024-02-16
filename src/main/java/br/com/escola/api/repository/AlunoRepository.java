@@ -15,5 +15,7 @@ public interface AlunoRepository extends CrudRepository<Aluno, Long> {
 
     @Query(value = "Select * from aluno",nativeQuery = true)
     List<Aluno> listarTodos();
+    @Query(value = "select a.* from aluno a, matricula m where a.cd_aluno = m.cd_aluno and m.status ='M' and sn_ativo = 'S'",nativeQuery = true)
+    List<Aluno> alnosMatriculados();
 }
 

@@ -25,6 +25,8 @@ public class CadEscolaDto {
 
     private String email;
 
+    private int limiteAlunoTurma;
+
     public CadEscolaDto(){}
     public CadEscolaDto(CadEscola cadEscola){
 
@@ -40,6 +42,7 @@ public class CadEscolaDto {
         this.cnPj = cadEscola.getCnPj();
         this.telefone = cadEscola.getTelefone();
         this.email = cadEscola.getEmail();
+        this.limiteAlunoTurma = cadEscola.getLimiteAlunoTurma();
 
     }
 
@@ -139,6 +142,14 @@ public class CadEscolaDto {
         this.email = email;
     }
 
+    public void setLimiteAlunoTurma(int limiteAlunoTurma) {
+        this.limiteAlunoTurma = limiteAlunoTurma;
+    }
+
+    public int getLimiteAlunoTurma() {
+        return limiteAlunoTurma;
+    }
+
     @Override
     public String toString() {
         return "CadEscolaDto{" +
@@ -154,6 +165,7 @@ public class CadEscolaDto {
                 ", cnPj='" + cnPj + '\'' +
                 ", telefone='" + telefone + '\'' +
                 ", email='" + email + '\'' +
+                ", limiteAlunoTurma=" + limiteAlunoTurma +
                 '}';
     }
 }

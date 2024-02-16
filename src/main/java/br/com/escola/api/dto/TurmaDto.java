@@ -40,5 +40,15 @@ public class TurmaDto {
 
 	public String getLocal() {
 		return local;
-	}	
+	}
+
+	@Override
+	public String toString() {
+		return "TurmaDto{" +
+				"cdTurma=" + cdTurma +
+				", dsTurma='" + dsTurma + '\'' +
+				", capacidade=" + capacidade +
+				", local='" + local + '\'' +
+				'}';
+	}
 }
