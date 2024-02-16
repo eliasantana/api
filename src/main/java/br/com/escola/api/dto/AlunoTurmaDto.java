@@ -12,6 +12,7 @@ public class AlunoTurmaDto {
     public AlunoTurmaDto( AlunoTurma alunoTurma){
         this.aluno = alunoTurma.getAluno();
         this.turma = alunoTurma.getTurma();
+        this.cdAlunoTurma = alunoTurma.getCdAlunoTurma();
     }
 
     public Long getCdAlunoTurma() {
