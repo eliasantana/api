@@ -11,8 +11,11 @@ import java.util.Optional;
 public interface MatriculaRepository extends CrudRepository<Matricula, Long>{
 
     @Query(value = "SELECT * FROM matricula where cd_aluno=:cdaluno and date_format(dt_matricula,'%Y')=date_format(curdate(),'%Y');", nativeQuery = true)
-    Optional<Matricula>getMatricula(Long cdaluno);
+    Optional<Matricula> getMatriculaAtual(Long cdaluno);
     @Query(value = "SELECT * FROM matricula where localizador=:localizador and date_format(dt_matricula,'%Y')=date_format(curdate(),'%Y');", nativeQuery = true)
-    Optional<Matricula>getMatricula(String localizador);
+    Optional<Matricula> getMatriculaAtual(String localizador);
+
+    @Query(value = "SELECT * FROM matricula where localizador=:localizador", nativeQuery = true)
+    Optional<Matricula> getMatricula(String localizador);
 
 }

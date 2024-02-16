@@ -53,5 +53,9 @@ public class AlunoController {
        List <AlunoDto> alunos = services.ListartTodos();
        return ResponseEntity.ok(alunos);
     }
+    @GetMapping("/matriculados")
+    public ResponseEntity<List<AlunoDto>> alunosMatriculados(){
+        return services.alunosMatriculados();
+    }
 
 }

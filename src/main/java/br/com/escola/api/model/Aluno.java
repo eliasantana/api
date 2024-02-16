@@ -1,5 +1,6 @@
 package br.com.escola.api.model;
 
+import br.com.escola.api.dto.AlunoDto;
 import jakarta.persistence.*;
 import org.w3c.dom.stylesheets.LinkStyle;
 
@@ -31,6 +32,14 @@ public class Aluno {
         this.cpf = cpf;
         this.dtCadastro = dtCadastro;
         this.snAtivo = snAtivo;
+    }
+
+    public Aluno(AlunoDto dto) {
+        this.cdAluno = Long.valueOf(dto.getCdAluno());
+        this.nome = dto.getNome();
+        this.cpf = Long.valueOf(dto.getCpf());
+        this.dtCadastro = LocalDate.parse(dto.getDtCadastro());
+        this.snAtivo = dto.getSnAtivo();
     }
 
     public Long getCdAluno() {

@@ -70,12 +70,28 @@ public class TurmaServices {
 			turmaExiste.setDsTurma(turmaDto.getDsTurma());
 			turmaExiste.setcapacidade(turmaDto.getCapacidade());
 			turmaExiste.setLocal(turmaDto.getLocal());
-			
+			turmaExiste.setcapacidade(turmaDto.getCapacidade());
 			return new TurmaDto(this.turmaRepository.save(turmaExiste));
 			
 		} else {
 			throw new NotFoundException("Não existe uma turma com o ideitificador especificado: " + cdTurma.toString());
 		}
+	}
+
+	public Turma salvar(Turma t){
+		return turmaRepository.save(t);
+	}
+
+	public Turma decremanta(Turma t){
+		Turma turma = t;
+		turma.setcapacidade(t.getcapacidade()-1);
+		return turma;
+	}
+
+	public Turma incrementaVaga(Turma t){
+		Turma turma = t;
+		turma.setcapacidade(t.getcapacidade()+1);
+		return turma;
 	}
 
 }

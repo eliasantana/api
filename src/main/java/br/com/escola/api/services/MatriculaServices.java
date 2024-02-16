@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -49,7 +50,7 @@ public class MatriculaServices {
     }
 
     public ResponseEntity<MatriculaDto> cancelar(String localizador) {
-       Optional<Matricula> matLocalizada = repository.getMatricula(localizador);
+       Optional<Matricula> matLocalizada = repository.getMatriculaAtual(localizador);
        if(matLocalizada.isEmpty()){
            throw new NotFoundException("A Matricula informada não foi localizada!");
        }else{
@@ -97,7 +98,7 @@ public class MatriculaServices {
         if (alunoLocalizado.isEmpty()){
             throw new NotFoundException("O aluno informado não foi localizado!");
         }else{
-            Optional<Matricula> matLocalizada = repository.getMatricula(alunoLocalizado.get().getCdAluno());
+            Optional<Matricula> matLocalizada = repository.getMatriculaAtual(alunoLocalizado.get().getCdAluno());
             if (matLocalizada.isPresent()&&tpOperacao.equals("M")){
                 throw new MatriculaExistenteException(String.format("Não é possível matricular o aluno informado. Ele já possui uma matricula para o ano Corrente! Mattícula->:" + matLocalizada.get().getLocalizador()));
             }
@@ -109,5 +110,8 @@ public class MatriculaServices {
 
     public ResponseEntity<MatriculaDto> getMatricula(String localizador) {
        return ResponseEntity.ok().body(new MatriculaDto( repository.getMatricula(localizador).orElseThrow(()->new NotFoundException("Matrícula não localizada!"))));
+    }
+    public Optional<Matricula> getMatricula(Long cdaluno) {
+        return repository.getMatriculaAtual(cdaluno);
     }
 }
