@@ -54,5 +54,10 @@ public class ExceptionHandler {
         StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "alunoTurmaException", ex.getMessage() ,request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+    @org.springframework.web.bind.annotation.ExceptionHandler(TurmaProfessorException.class)
+    public ResponseEntity<StandardError>turmaProfessorException(TurmaProfessorException ex, HttpServletRequest request){
+        StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "TurmaProfessorException", ex.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 
 }

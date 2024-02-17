@@ -67,4 +67,10 @@ public class ProfessorServices {
         }
         return  ResponseEntity.ok(profDto);
     }
+
+    public Optional<Professor> getProfessor(Long idProfessor){
+        Optional<Professor> professorLocalizado = repository.findById(idProfessor);
+        if(professorLocalizado.isEmpty()) throw new NotFoundException("O professor informado não foi localizado!");
+        return professorLocalizado;
+    }
 }
