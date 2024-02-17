@@ -21,6 +21,7 @@ public class AlunoTurma {
 
     public AlunoTurma(){}
     public AlunoTurma(AlunoTurmaDto dto){
+        this.cdAlunoTurma= dto.getCdAlunoTurma();
         this.turma = dto.getTurma();
         this.aluno = dto.getAluno();
     }
