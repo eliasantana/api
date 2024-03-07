@@ -3,6 +3,7 @@ package br.com.escola.api.controller;
 import br.com.escola.api.dto.DisciplinaDto;
 import br.com.escola.api.model.Disciplina;
 import br.com.escola.api.services.DisciplinaServices;
+import br.com.escola.api.services.exceptions.DisciplinaProfessorException;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +41,19 @@ public class DisciplinaController {
         return services.localizarTodas();
     }
 
+    @Operation(description = "Exclui uma Disciplina")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<DisciplinaDto>delete(@PathVariable Long id){
         return services.delete(id);
     }
-
+    @Operation(description = "Altera a Disciplina informada")
     @PutMapping("/alterar/{id}")
     public ResponseEntity<DisciplinaDto>put(@PathVariable Long id,@Valid @RequestBody DisciplinaDto disciplinaDto){
         return services.alterar(id, disciplinaDto);
+    }
+    @Operation(description = "Ativa ou desativa uma Disciplina")
+    @PutMapping("/ativadesativa/{idDisciplina}")
+    public ResponseEntity<DisciplinaDto> ativarDesativarDisciplina(@PathVariable Long idDisciplina){
+       return services.ativaDesativaDisciplina(idDisciplina);
     }
 }

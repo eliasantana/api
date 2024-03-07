@@ -59,5 +59,10 @@ public class ExceptionHandler {
         StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "TurmaProfessorException", ex.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+    @org.springframework.web.bind.annotation.ExceptionHandler(DisciplinaProfessorException.class)
+    public ResponseEntity<StandardError>turmaProfessorException(DisciplinaProfessorException ex, HttpServletRequest request){
+        StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "DisciplinaProfessorException", ex.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 
 }
