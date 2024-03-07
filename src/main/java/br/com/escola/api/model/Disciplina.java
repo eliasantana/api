@@ -21,6 +21,7 @@ public class Disciplina {
     public Disciplina(){}
 
     public Disciplina(DisciplinaDto dto){
+        this.cdDisciplina = dto.getCdDisciplina();
         this.nome = dto.getNome();
         this.snAtivo = dto.getSnAtivo();
         this.cargaHoraria = dto.getCargaHoraria();
