@@ -31,7 +31,8 @@ public class FuncionarioServices {
 	
 	//Busca todos os Funcionários
 	public List<FuncionarioDto> listarTodosFuncionarios() {	
-		List<Funcionario> listaFuncionario = (List<Funcionario>) this.funcionarioRepository.findAll();
+		//List<Funcionario> listaFuncionario = (List<Funcionario>) this.funcionarioRepository.findAll();
+		List<Funcionario> listaFuncionario = this.funcionarioRepository.getTodosFuncionario();
 	      List<FuncionarioDto> funcionarioDtoLista = listaFuncionario.stream()
 	              .map(Funcionario -> new FuncionarioDto(Funcionario))
 	              .collect(Collectors.toList());
