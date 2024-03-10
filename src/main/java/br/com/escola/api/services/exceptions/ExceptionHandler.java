@@ -65,4 +65,9 @@ public class ExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
+    @org.springframework.web.bind.annotation.ExceptionHandler(AlunoException.class)
+    public ResponseEntity<StandardError>alunoException(AlunoException ex, HttpServletRequest request){
+        StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "AlunoException", ex.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 }
