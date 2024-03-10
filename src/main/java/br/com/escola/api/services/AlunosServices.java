@@ -5,6 +5,7 @@ import br.com.escola.api.dto.AlunoTurmaDto;
 import br.com.escola.api.model.Aluno;
 import br.com.escola.api.repository.AlunoRepository;
 
+import br.com.escola.api.services.exceptions.AlunoException;
 import br.com.escola.api.services.exceptions.MethodArgumentNotValidException;
 import br.com.escola.api.services.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +26,21 @@ public class AlunosServices {
     AlunoRepository repository;
 
     public AlunoDto create(AlunoDto dto) {
-        Aluno aluno = new Aluno();
-        aluno.setCdAluno(null);
-        aluno.setNome(dto.getNome());
-        aluno.setDtCadastro(LocalDate.parse(dto.getDtCadastro()));
-        aluno.setCpf(Long.parseLong(dto.getCpf()));
-        aluno.setSnAtivo(dto.getSnAtivo());
-        Aluno alunoSalvo = repository.save(aluno);
-      return new AlunoDto(alunoSalvo);
+      Optional <Aluno> alunoLocalizado = repository.localizarAlunoPorCpf(Long.parseLong(dto.getCpf()));
+      if (alunoLocalizado.isEmpty()){
+          Aluno aluno = new Aluno();
+          aluno.setCdAluno(null);
+          aluno.setNome(dto.getNome());
+          aluno.setDtCadastro(LocalDate.parse(dto.getDtCadastro()));
+          aluno.setCpf(Long.parseLong(dto.getCpf()));
+          aluno.setSnAtivo(dto.getSnAtivo());
+          Aluno alunoSalvo = repository.save(aluno);
+          return new AlunoDto(alunoSalvo);
+      }else{
+          throw new AlunoException(String.format("O CPF %s informado já está sendo utilizado pelo(a) aluno(a) %s Informe o CPF correto do Aluno",dto.getCpf(), alunoLocalizado.get().getNome()));
+      }
+
+
     }
 
     public AlunoDto localizar(Long id) {
