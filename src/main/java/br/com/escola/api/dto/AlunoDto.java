@@ -2,10 +2,13 @@ package br.com.escola.api.dto;
 
 import br.com.escola.api.model.Aluno;
 
+import br.com.escola.api.model.Notas;
 import jakarta.validation.constraints.NotNull;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AlunoDto {
 
@@ -18,6 +21,7 @@ public class AlunoDto {
     private String dtCadastro;
     @NotNull(message = "Informe o Status do Aluno")
     private String snAtivo;
+    private List<Notas> notas = new ArrayList<>();
 
     public AlunoDto(){}
     public AlunoDto( Aluno aluno){
@@ -51,14 +55,23 @@ public class AlunoDto {
         return snAtivo;
     }
 
+    public void setNotas(List<Notas> notas) {
+        this.notas = notas;
+    }
+
+    public List<Notas> getNotas() {
+        return notas;
+    }
+
     @Override
     public String toString() {
         return "AlunoDto{" +
-                "cdAluno=" + cdAluno +
+                "cdAluno='" + cdAluno + '\'' +
                 ", nome='" + nome + '\'' +
-                ", cpf=" + cpf +
-                ", dtCadastro=" + dtCadastro +
+                ", cpf='" + cpf + '\'' +
+                ", dtCadastro='" + dtCadastro + '\'' +
                 ", snAtivo='" + snAtivo + '\'' +
+                ", notas=" + notas +
                 '}';
     }
 }

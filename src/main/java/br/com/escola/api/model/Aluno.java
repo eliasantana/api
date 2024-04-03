@@ -22,6 +22,7 @@ public class Aluno {
     @OneToMany(mappedBy = "aluno")
     private List<Matricula> matricula = new ArrayList<>();
 
+
     public Aluno(){
 
     }
@@ -32,6 +33,7 @@ public class Aluno {
         this.cpf = cpf;
         this.dtCadastro = dtCadastro;
         this.snAtivo = snAtivo;
+
     }
 
     public Aluno(AlunoDto dto) {
@@ -40,6 +42,7 @@ public class Aluno {
         this.cpf = Long.valueOf(dto.getCpf());
         this.dtCadastro = LocalDate.parse(dto.getDtCadastro());
         this.snAtivo = dto.getSnAtivo();
+
     }
 
     public Long getCdAluno() {
@@ -89,6 +92,7 @@ public class Aluno {
     public List<Matricula> getMatricula() {
         return matricula;
     }
+
 
     @Override
     public String toString() {

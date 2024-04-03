@@ -14,12 +14,12 @@ public class Matricula {
     private Long cdMatricula;
     @Column(unique = true)
     private String localizador;
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "cd_aluno")
     private Aluno aluno;
     private LocalDate dtMatricula;
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "cd_funcionario")
     private Funcionario funcionario;

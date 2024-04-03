@@ -1,6 +1,5 @@
 package br.com.escola.api.repository;
 
-import br.com.escola.api.dto.AlunoDto;
 import br.com.escola.api.model.Aluno;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -21,5 +20,6 @@ public interface AlunoRepository extends CrudRepository<Aluno, Long> {
 
     @Query(value = "select * from aluno where cpf=:cpf", nativeQuery = true)
     Optional<Aluno> localizarAlunoPorCpf(Long cpf);
+
 }
 

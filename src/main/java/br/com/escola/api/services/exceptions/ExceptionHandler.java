@@ -70,4 +70,21 @@ public class ExceptionHandler {
         StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "AlunoException", ex.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(DisciplinaException.class)
+    public ResponseEntity<StandardError>disciplinaException(DisciplinaException ex, HttpServletRequest request){
+        StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "DisciplinaException", ex.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(MatriculaException.class)
+    public ResponseEntity<StandardError>disciplinaException(MatriculaException ex, HttpServletRequest request){
+        StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "DisciplinaException", ex.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+    @org.springframework.web.bind.annotation.ExceptionHandler(NotasException.class)
+    public ResponseEntity<StandardError>disciplinaException(NotasException ex, HttpServletRequest request){
+        StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "NotasException", ex.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 }
