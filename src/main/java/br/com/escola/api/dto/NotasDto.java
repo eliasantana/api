@@ -1,41 +1,30 @@
-package br.com.escola.api.model;
+package br.com.escola.api.dto;
 
-import br.com.escola.api.dto.NotasDto;
 import br.com.escola.api.enumerator.TipoNota;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import br.com.escola.api.model.Aluno;
+import br.com.escola.api.model.Disciplina;
+import br.com.escola.api.model.Matricula;
+import br.com.escola.api.model.Notas;
 import jakarta.persistence.*;
 
-@Entity
-@Table(name = "notas")
-public class Notas {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class NotasDto {
+
     private Long cdNotas;
-
-    @ManyToOne
-    @JoinColumn(name = "cd_aluno")
-
     private Aluno aluno;
-    @ManyToOne
-    @JoinColumn(name = "cd_matricula")
     private Matricula matricula;
-    @ManyToOne
-    @JoinColumn(name = "cd_disciplina")
     private Disciplina disciplina;
 
     private TipoNota tipoNota;
-    public Notas(NotasDto dto) {
-        this.cdNotas = dto.getCdNotas();
-        this.aluno = dto.getAluno();
-        this.matricula = dto.getMatricula();
-        this.disciplina = dto.getDisciplina();
-        this.tipoNota = dto.getTipoNota();
+
+    public NotasDto(){}
+
+    public NotasDto(Notas nota) {
+        this.cdNotas = nota.getCdNotas();
+        this.aluno = nota.getAluno();
+        this.matricula = nota.getMatricula();
+        this.disciplina = nota.getDisciplina();
+        this.tipoNota = nota.getTipoNota();
     }
-
-    private Double nota;
-    private String observacao;
-
-    public Notas(){}
 
     public Long getCdNotas() {
         return cdNotas;
@@ -69,14 +58,6 @@ public class Notas {
         this.disciplina = disciplina;
     }
 
-    public void setNota(Double nota) {
-        this.nota = nota;
-    }
-
-    public Double getNota() {
-        return nota;
-    }
-
     public void setTipoNota(TipoNota tipoNota) {
         this.tipoNota = tipoNota;
     }
@@ -85,24 +66,14 @@ public class Notas {
         return tipoNota;
     }
 
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
-    }
-
-    public String getObservacao() {
-        return observacao;
-    }
-
     @Override
     public String toString() {
-        return "Notas{" +
+        return "NotasDto{" +
                 "cdNotas=" + cdNotas +
                 ", aluno=" + aluno +
                 ", matricula=" + matricula +
                 ", disciplina=" + disciplina +
-                ", nota=" + nota +
-                ", tipoNota=" + tipoNota.toString() +
-                ", observacao='" + observacao + '\'' +
+                ", tipoNota="+tipoNota.toString()+
                 '}';
     }
 }

@@ -1,9 +1,7 @@
 package br.com.escola.api.model;
 
 import br.com.escola.api.dto.DisciplinaProfessorDto;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.hibernate.mapping.Join;
 
 @Entity
 @Table(name = "disciplina_professor")
