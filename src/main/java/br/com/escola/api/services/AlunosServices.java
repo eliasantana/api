@@ -104,4 +104,9 @@ public class AlunosServices {
                .collect(Collectors.toList());
        return ResponseEntity.ok(listDto);
     }
+
+    public List<Aluno> listarAlunos(Long idescola) {
+       return repository.listarAlunos(idescola);
+
+    }
 }

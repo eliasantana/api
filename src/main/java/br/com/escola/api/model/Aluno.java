@@ -1,6 +1,7 @@
 package br.com.escola.api.model;
 
 import br.com.escola.api.dto.AlunoDto;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.w3c.dom.stylesheets.LinkStyle;
 
@@ -21,7 +22,6 @@ public class Aluno {
     private String snAtivo;
     @OneToMany(mappedBy = "aluno")
     private List<Matricula> matricula = new ArrayList<>();
-
 
     public Aluno(){
 

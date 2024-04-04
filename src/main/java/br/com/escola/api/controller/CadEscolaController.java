@@ -1,5 +1,6 @@
 package br.com.escola.api.controller;
 
+import br.com.escola.api.dto.AlunoDto;
 import br.com.escola.api.dto.CadEscolaDto;
 import br.com.escola.api.model.CadEscola;
 import br.com.escola.api.services.CadEscolaServices;
@@ -43,5 +44,10 @@ public class CadEscolaController {
     @PutMapping("/alterar/{id}")
     public ResponseEntity<CadEscolaDto>alterar(@RequestBody CadEscolaDto dto, @PathVariable Long id){
         return services.alterar(id, dto);
+    }
+
+    @GetMapping("/lista-de-alunos/{idescola}")
+    public ResponseEntity<List<AlunoDto>>listarAlunosEscola(@PathVariable Long idescola){
+        return services.listarAlunosEscola(idescola);
     }
 }

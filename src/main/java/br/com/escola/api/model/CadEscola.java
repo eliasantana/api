@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "cad_escola")
@@ -30,6 +32,9 @@ public class CadEscola {
     @NotNull
     private String email;
     private int limiteAlunoTurma;
+    @OneToMany
+    @JoinColumn(name = "cd_aluno_escola")
+    private List<Aluno> aluno  = new ArrayList<>();
 
     public CadEscola(){}
     public CadEscola(CadEscolaDto dto){
@@ -47,6 +52,7 @@ public class CadEscola {
         this.endereco = dto.getEndereco();
         this.email = dto.getEmail();
         this.limiteAlunoTurma = dto.getLimiteAlunoTurma();
+
     }
 
     public Long getCdEscola() {
@@ -153,6 +159,14 @@ public class CadEscola {
         return limiteAlunoTurma;
     }
 
+    public void setAluno(List<Aluno> aluno) {
+        this.aluno = aluno;
+    }
+
+    public List<Aluno> getAluno() {
+        return aluno;
+    }
+
     @Override
     public String toString() {
         return "CadEscola{" +
@@ -169,6 +183,7 @@ public class CadEscola {
                 ", telefone='" + telefone + '\'' +
                 ", email='" + email + '\'' +
                 ", limiteAlunoTurma=" + limiteAlunoTurma +
+                ", aluno=" + aluno +
                 '}';
     }
 }
