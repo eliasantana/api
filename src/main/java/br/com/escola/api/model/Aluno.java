@@ -1,9 +1,8 @@
 package br.com.escola.api.model;
 
 import br.com.escola.api.dto.AlunoDto;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import org.w3c.dom.stylesheets.LinkStyle;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,11 +22,16 @@ public class Aluno {
     @OneToMany(mappedBy = "aluno")
     private List<Matricula> matricula = new ArrayList<>();
 
-    public Aluno(){
+    @ManyToOne
+    private CadEscola escola;
+    @OneToMany
+    private List<Notas> notas = new ArrayList<>();
+
+    public Aluno() {
 
     }
 
-    public Aluno(Long cdAluno, String nome, Long cpf, LocalDate dtCadastro,  String snAtivo) {
+    public Aluno(Long cdAluno, String nome, Long cpf, LocalDate dtCadastro, String snAtivo) {
         this.cdAluno = cdAluno;
         this.nome = nome;
         this.cpf = cpf;
@@ -42,6 +46,7 @@ public class Aluno {
         this.cpf = Long.valueOf(dto.getCpf());
         this.dtCadastro = LocalDate.parse(dto.getDtCadastro());
         this.snAtivo = dto.getSnAtivo();
+
 
     }
 
@@ -93,6 +98,13 @@ public class Aluno {
         return matricula;
     }
 
+    public void setEscola(CadEscola escola) {
+        this.escola = escola;
+    }
+
+    public CadEscola getEscola() {
+        return escola;
+    }
 
     @Override
     public String toString() {
@@ -103,6 +115,7 @@ public class Aluno {
                 ", dtCadastro=" + dtCadastro +
                 ", snAtivo='" + snAtivo + '\'' +
                 ", matricula=" + matricula +
+                ", escola=" + escola +
                 '}';
     }
 }

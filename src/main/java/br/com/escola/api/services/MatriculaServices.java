@@ -1,12 +1,14 @@
 package br.com.escola.api.services;
 
 import br.com.escola.api.model.Aluno;
+import br.com.escola.api.model.CadEscola;
 import br.com.escola.api.model.Funcionario;
 import br.com.escola.api.model.Matricula;
 import br.com.escola.api.dto.MatriculaDto;
 import br.com.escola.api.repository.AlunoRepository;
 import br.com.escola.api.repository.FuncionarioRepository;
 import br.com.escola.api.repository.MatriculaRepository;
+import br.com.escola.api.services.exceptions.CadEscolaException;
 import br.com.escola.api.services.exceptions.MatriculaExistenteException;
 import br.com.escola.api.services.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,24 +29,36 @@ public class MatriculaServices {
     AlunoRepository alunoRepository;
     @Autowired
     FuncionarioRepository funcionarioRepository;
-    public ResponseEntity<MatriculaDto> create(Long idaluno, Long idfuncionario) {
-      Optional<Aluno> alunoLocalizado = alunoRepository.findById(idaluno);
-      Optional<Funcionario> funcionarioLocalizado = funcionarioRepository.findById(idfuncionario);
-      String tpOperacao="M";
 
+    @Autowired
+    CadEscolaServices cadEscolaServices;
+
+    public ResponseEntity<MatriculaDto> create(Long idaluno, Long idfuncionario, Long idescola) {
+      Optional<Aluno> alunoLocalizado = alunoRepository.findById(idaluno);
+      Aluno aluno = alunoLocalizado.get();
+      Optional<CadEscola> escolaLocalizada = cadEscolaServices.localizar(idescola);
+      if (escolaLocalizada.isEmpty()){
+          throw new CadEscolaException("Escola não localizada!");
+      }
+      aluno.setEscola(escolaLocalizada.get());
+      alunoRepository.save(aluno);
+      Optional<Funcionario> funcionarioLocalizado = funcionarioRepository.findById(idfuncionario);
+      String tpOperacao="M"; //M = Matricula
       validaAlunoLocalizado(alunoLocalizado, funcionarioLocalizado,tpOperacao);
 
       Matricula matricula = new Matricula();
       matricula.setDtMatricula(now());
       matricula.setFuncionario(funcionarioLocalizado.get());
       matricula.setAluno(alunoLocalizado.get());
-      matricula.setStatus("M");
+      matricula.setStatus(tpOperacao);
       String localizador = alunoLocalizado.get().getCdAluno().toString()
                                                 .concat(String.valueOf(now().getMonthValue())
                                                 .concat(String.valueOf(now().getYear())).concat(funcionarioLocalizado.get().getCdFuncionario().toString()));
       matricula.setLocalizador(localizador);
       Matricula matSalva = repository.save(matricula);
-      return ResponseEntity.ok().body(new MatriculaDto(matricula));
+      alunoRepository.save(alunoLocalizado.get());
+        //return ResponseEntity.ok().body(new MatriculaDto(matSalva));
+      return ResponseEntity.noContent().build();
 
 
     }

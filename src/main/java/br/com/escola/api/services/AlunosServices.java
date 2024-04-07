@@ -1,19 +1,15 @@
 package br.com.escola.api.services;
 
 import br.com.escola.api.dto.AlunoDto;
-import br.com.escola.api.dto.AlunoTurmaDto;
 import br.com.escola.api.model.Aluno;
 import br.com.escola.api.repository.AlunoRepository;
 
 import br.com.escola.api.services.exceptions.AlunoException;
-import br.com.escola.api.services.exceptions.MethodArgumentNotValidException;
 import br.com.escola.api.services.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDate;
 import java.util.List;

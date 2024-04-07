@@ -1,18 +1,20 @@
 package br.com.escola.api.controller;
 
 import br.com.escola.api.dto.AlunoDto;
-import br.com.escola.api.model.Aluno;
+import br.com.escola.api.model.CadEscola;
 import br.com.escola.api.services.AlunosServices;
+import br.com.escola.api.services.CadEscolaServices;
+import br.com.escola.api.services.exceptions.CadEscolaException;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/aluno")
@@ -20,12 +22,17 @@ public class AlunoController {
     @Autowired
     AlunosServices services;
 
+    @Autowired
+    CadEscolaServices cadEscolaServices;
+
     @PostMapping
     @Operation(description = "Adiciona um aluno Aluno")
     public ResponseEntity<AlunoDto> create(@RequestBody @Valid AlunoDto dto){
-        AlunoDto alunoDto= services.create(dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(alunoDto.getCdAluno()).toUri();
-        return ResponseEntity.created(uri).build();
+
+            AlunoDto alunoDto= services.create(dto);
+            URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(alunoDto.getCdAluno()).toUri();
+            return ResponseEntity.created(uri).build();
+
     }
 
     @GetMapping("/localizar/{id}")

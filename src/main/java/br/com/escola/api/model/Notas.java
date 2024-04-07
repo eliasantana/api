@@ -4,6 +4,7 @@ import br.com.escola.api.dto.NotasDto;
 import br.com.escola.api.enumerator.TipoNota;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.validator.internal.metadata.aggregated.rule.ReturnValueMayOnlyBeMarkedOnceAsCascadedPerHierarchyLine;
 
 @Entity
 @Table(name = "notas")
@@ -14,7 +15,6 @@ public class Notas {
 
     @ManyToOne
     @JoinColumn(name = "cd_aluno")
-
     private Aluno aluno;
     @ManyToOne
     @JoinColumn(name = "cd_matricula")
@@ -22,8 +22,8 @@ public class Notas {
     @ManyToOne
     @JoinColumn(name = "cd_disciplina")
     private Disciplina disciplina;
-
     private TipoNota tipoNota;
+
     public Notas(NotasDto dto) {
         this.cdNotas = dto.getCdNotas();
         this.aluno = dto.getAluno();

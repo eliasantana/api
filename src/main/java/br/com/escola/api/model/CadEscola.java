@@ -32,8 +32,7 @@ public class CadEscola {
     @NotNull
     private String email;
     private int limiteAlunoTurma;
-    @OneToMany
-    @JoinColumn(name = "cd_aluno_escola")
+    @OneToMany(mappedBy = "escola")
     private List<Aluno> aluno  = new ArrayList<>();
 
     public CadEscola(){}

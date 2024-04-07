@@ -16,9 +16,9 @@ public class MatriculaController {
     MatriculaServices services;
     @Operation(description = "Matricula um aluno. Informando o ID do aluno e o ID do funcionário")
     @ApiResponse(responseCode ="200", description = "Matrícula Realizada com sucesso!")
-    @PutMapping("/matricular/{idaluno}/{idfuncionario}")
-    public ResponseEntity<MatriculaDto> create(@PathVariable Long idaluno, @PathVariable Long idfuncionario){
-        return services.create(idaluno, idfuncionario);
+    @PutMapping("/matricular/{idaluno}/{idfuncionario}/{idescola}")
+    public ResponseEntity<MatriculaDto> create(@PathVariable Long idaluno, @PathVariable Long idfuncionario, @PathVariable Long idescola){
+        return services.create(idaluno, idfuncionario,idescola);
     }
     @Operation(description = "Cancela uma matrícula a partir do Localizador")
     @PostMapping("/cancelar/{localizador}")

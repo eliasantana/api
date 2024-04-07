@@ -17,10 +17,7 @@ import br.com.escola.api.services.exceptions.NotasException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.stylesheets.LinkStyle;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,7 +32,7 @@ public class NotasServices {
 
     @Autowired
     DisciplinaRepository disciplinaRepository;
-    public ResponseEntity<NotasDto> adicionar(Long idaluno, Long iddisciplina, Double nota) {
+    public ResponseEntity<NotasDto> adicionar(Long idaluno, Long iddisciplina, Double nota, int tipoNota) {
        Aluno aluno = alunoRepository.localizarAluno(idaluno);
 
        if (aluno!=null){
@@ -48,11 +45,17 @@ public class NotasServices {
                    n.setAluno(aluno);
                    n.setDisciplina(disciplinaLocalizada.get());
                    n.setMatricula(matriculaLocalizada.get());
-                   n.setTipoNota(TipoNota.PROVA);
+                   // 0-PROVA 1-TESTE
+                   if (tipoNota==0){
+                       n.setTipoNota(TipoNota.PROVA);
+                   }else{
+                       n.setTipoNota(TipoNota.TESTE);
+                   }
                    n.setNota(nota);
 
                    Notas notaSalva =repository.save(n);
-                   return  ResponseEntity.ok(new NotasDto(notaSalva));
+                   //return  ResponseEntity.ok(new NotasDto(notaSalva));
+                   return ResponseEntity.noContent().build();
                }else{
                    throw new DisciplinaException(String.format("Disciplina de ID %s não foi localizada!",iddisciplina));
                }
