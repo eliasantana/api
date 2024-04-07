@@ -15,6 +15,7 @@ public class Matricula {
     @Column(unique = true)
     private String localizador;
 
+
     @ManyToOne
     @JoinColumn(name = "cd_aluno")
     private Aluno aluno;

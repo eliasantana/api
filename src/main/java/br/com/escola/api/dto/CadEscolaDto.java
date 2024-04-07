@@ -1,9 +1,11 @@
 package br.com.escola.api.dto;
 
+import br.com.escola.api.model.Aluno;
 import br.com.escola.api.model.CadEscola;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class CadEscolaDto {
     private Long cdEscola;
@@ -27,7 +29,7 @@ public class CadEscolaDto {
 
     private int limiteAlunoTurma;
 
-    public CadEscolaDto(){}
+  public CadEscolaDto(){}
     public CadEscolaDto(CadEscola cadEscola){
 
         this.cdEscola = cadEscola.getCdEscola();
@@ -149,7 +151,6 @@ public class CadEscolaDto {
     public int getLimiteAlunoTurma() {
         return limiteAlunoTurma;
     }
-
     @Override
     public String toString() {
         return "CadEscolaDto{" +

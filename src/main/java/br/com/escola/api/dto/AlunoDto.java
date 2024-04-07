@@ -2,6 +2,7 @@ package br.com.escola.api.dto;
 
 import br.com.escola.api.model.Aluno;
 
+import br.com.escola.api.model.CadEscola;
 import br.com.escola.api.model.Notas;
 import jakarta.validation.constraints.NotNull;
 
@@ -21,7 +22,10 @@ public class AlunoDto {
     private String dtCadastro;
     @NotNull(message = "Informe o Status do Aluno")
     private String snAtivo;
+
     private List<Notas> notas = new ArrayList<>();
+
+
 
     public AlunoDto(){}
     public AlunoDto( Aluno aluno){
@@ -30,7 +34,6 @@ public class AlunoDto {
         this.cpf = aluno.getCpf().toString();
         this.dtCadastro = LocalDate.now().toString();
         this.snAtivo = aluno.getSnAtivo();
-
     }
 
 

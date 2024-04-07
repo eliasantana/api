@@ -21,5 +21,7 @@ public interface AlunoRepository extends CrudRepository<Aluno, Long> {
     @Query(value = "select * from aluno where cpf=:cpf", nativeQuery = true)
     Optional<Aluno> localizarAlunoPorCpf(Long cpf);
 
+    @Query(value = "select * from aluno where escola_cd_escola=:idescola", nativeQuery = true)
+    List<Aluno> listarAlunos(Long idescola);
 }
 
