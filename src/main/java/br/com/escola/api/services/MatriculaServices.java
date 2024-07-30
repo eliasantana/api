@@ -9,13 +9,13 @@ import br.com.escola.api.repository.AlunoRepository;
 import br.com.escola.api.repository.FuncionarioRepository;
 import br.com.escola.api.repository.MatriculaRepository;
 import br.com.escola.api.services.exceptions.CadEscolaException;
+import br.com.escola.api.services.exceptions.MatriculaException;
 import br.com.escola.api.services.exceptions.MatriculaExistenteException;
 import br.com.escola.api.services.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -125,7 +125,21 @@ public class MatriculaServices {
     public ResponseEntity<MatriculaDto> getMatricula(String localizador) {
        return ResponseEntity.ok().body(new MatriculaDto( repository.getMatricula(localizador).orElseThrow(()->new NotFoundException("Matrícula não localizada!"))));
     }
-    public Optional<Matricula> getMatricula(Long cdaluno) {
-        return repository.getMatriculaAtual(cdaluno);
+    public ResponseEntity<MatriculaDto> getMatricula(Long cdaluno) {
+       Optional<Matricula> matLocalizada = repository.getMatriculaAtual(cdaluno);
+       if (matLocalizada.isEmpty()){
+           throw new MatriculaException("Matrícula do Aluno nâo localizada!");
+       }else{
+           return ResponseEntity.ok(new MatriculaDto(matLocalizada.get()));
+       }
+    }
+
+    public Matricula getMatriculaAluno(Long cdaluno) {
+       Optional<Matricula> matriculaLocalizada = repository.getMatriculaAluno(cdaluno);
+       if(matriculaLocalizada.isEmpty()){
+           throw new MatriculaException("Matrícula do Aluno nâo localizada!");
+       }else{
+           return matriculaLocalizada.get();
+       }
     }
 }

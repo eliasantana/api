@@ -74,7 +74,7 @@ public class AlunoDto {
                 ", cpf='" + cpf + '\'' +
                 ", dtCadastro='" + dtCadastro + '\'' +
                 ", snAtivo='" + snAtivo + '\'' +
-                ", notas=" + notas +
+               ", notas=" + notas +
                 '}';
     }
 }

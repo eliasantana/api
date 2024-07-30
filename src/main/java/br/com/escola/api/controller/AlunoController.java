@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -27,12 +28,11 @@ public class AlunoController {
 
     @PostMapping
     @Operation(description = "Adiciona um aluno Aluno")
-    public ResponseEntity<AlunoDto> create(@RequestBody @Valid AlunoDto dto){
+    public ResponseEntity<AlunoDto> create(@RequestBody @Valid AlunoDto dto, UriComponentsBuilder uriComponentsBuilder){
 
             AlunoDto alunoDto= services.create(dto);
-            URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(alunoDto.getCdAluno()).toUri();
-            return ResponseEntity.created(uri).build();
-
+            var uri = uriComponentsBuilder.path("/localizar/{id}").buildAndExpand(alunoDto.getCdAluno()).toUri();
+            return ResponseEntity.created(uri).body(alunoDto);
     }
 
     @GetMapping("/localizar/{id}")

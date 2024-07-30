@@ -31,8 +31,14 @@ public class MatriculaController {
         return services.renovar(idaluno, idfuncionario);
     }
     @Operation(description = "Localiza uma matrícula por meio do localizador!")
-    @GetMapping("/localizar/{localizador}")
-    public ResponseEntity<MatriculaDto> getMatricula(@PathVariable String localizador){
-        return  services.getMatricula(localizador);
+    @GetMapping({"/localizar/{localizador}","/localizamataluno/{cdaluno}"})
+    public ResponseEntity<MatriculaDto> getMatricula(@PathVariable (required = false) String localizador,
+                                                     @PathVariable(required = false) Long cdaluno){
+        if(localizador!=null){
+            return  services.getMatricula(localizador);
+        }else{
+            Matricula m = services.getMatriculaAluno(cdaluno);
+            return ResponseEntity.ok(new MatriculaDto(m));
+        }
     }
 }

@@ -30,7 +30,10 @@ public class AlunoTurmaServices {
     MatriculaServices matriculaServices;
 
     public ResponseEntity<AlunoTurmaDto> adicionar(long idaluno, long idturma) {
-        if (matriculaServices.getMatricula(idaluno).isEmpty()) throw new NotFoundException("O aluno não pode ser incluído nesta turma pois ainda não foi matriculado!, Matricule o aluno para continuar!");
+
+        if ( matriculaServices.getMatriculaAluno(idaluno)==null) {
+            throw new NotFoundException("O aluno não pode ser incluído nesta turma pois ainda não foi matriculado!, Matricule o aluno para continuar!");
+        }
         TurmaDto turmaDto = turmaServices.localizarTurma(idturma);
         AlunoDto alunoDto =  alunosServices.localizar(idaluno);
         Optional<AlunoTurma> existe = repository.existe(idaluno, idturma);
